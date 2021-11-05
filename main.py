@@ -1,11 +1,13 @@
-from decouple import config
+from dotenv import load_dotenv
+import os
 import discord
 from discord.ext import commands
 from discord.ext.commands import context
 
+load_dotenv()
 
-API_TOKEN = config('TOKEN')
-API_PREFIX = config('PREFIX')
+API_TOKEN = os.getenv("TOKEN")
+API_PREFIX = os.getenv("PREFIX")
 
 bot = commands.Bot(command_prefix=API_PREFIX,
                    description="PijarKeun Discord Bot")
@@ -25,6 +27,16 @@ async def hello(ctx, name: str):
 async def bye(ctx):
     embed = discord.Embed(
         title="Hello I am leaving now"
+    )
+
+    msg = await ctx.send(embed=embed)
+    await msg.add_reaction('✅')
+
+
+@bot.command(pass_context=True)
+async def status(ctx):
+    embed = discord.Embed(
+        title="bot is under developing"
     )
 
     msg = await ctx.send(embed=embed)
